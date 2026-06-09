@@ -3,6 +3,9 @@ package com.kavya.hackmate.auth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.kavya.hackmate.auth.dto.AuthResponse;
+import com.kavya.hackmate.auth.dto.LoginRequest;
 import com.kavya.hackmate.auth.dto.RegisterRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,5 +20,12 @@ public class AuthController {
     @PostMapping("/register")
     public void register(@RequestBody RegisterRequest request) {
         authService.register(request);
+    }
+
+    @PostMapping("/login")
+    public AuthResponse login(
+            @RequestBody LoginRequest request) {
+
+        return authService.login(request);
     }
 }

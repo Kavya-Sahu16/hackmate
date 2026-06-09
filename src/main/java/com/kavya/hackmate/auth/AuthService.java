@@ -9,6 +9,9 @@ import com.kavya.hackmate.user.User;
 import com.kavya.hackmate.user.enums.Role;
 import com.kavya.hackmate.user.enums.Status;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.kavya.hackmate.auth.dto.LoginRequest;
+import com.kavya.hackmate.auth.dto.AuthResponse;
+import com.kavya.hackmate.security.JwtService;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +21,7 @@ import java.time.LocalDateTime;
 public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     public void register(RegisterRequest request) {
 
@@ -42,14 +46,32 @@ public class AuthService {
 
         userRepository.save(user);
     }
+
+    public AuthResponse login(LoginRequest request) {
+
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new BadRequestException("Invalid username or password"));
+
+        if (!passwordEncoder.matches(
+                request.getPassword(),
+                user.getPassword())) {
+
+            throw new BadRequestException("Invalid username or password");
+        }
+
+        String token = jwtService.generateToken(user.getUsername());
+
+        return AuthResponse.builder()
+                .token(token)
+                .build();
+    }
 }
 
-
-/* 
-what the register method does-
-1. Check email uniqueness
-2. Check username uniqueness
-3. Create User object
-4. Set default values
-5. Save user to database
-*/
+/*
+ * what the register method does-
+ * 1. Check email uniqueness
+ * 2. Check username uniqueness
+ * 3. Create User object
+ * 4. Set default values
+ * 5. Save user to database
+ */
