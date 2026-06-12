@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateSkillRequest {
+public class AddSkillRequest {
 
-    private String name;
-    private String category;
+    private Long skillId;
 }

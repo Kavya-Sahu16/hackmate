@@ -20,7 +20,7 @@ public class JwtService {
     public String generateToken(String username) {
 
         return Jwts.builder()
-                .subject(username)
+                .subject(username)   // which means we'll identify the logged-in user using username.
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + 86400000))
                 .signWith(getSigningKey())

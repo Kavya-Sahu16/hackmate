@@ -4,6 +4,9 @@ import com.kavya.hackmate.user.enums.Role;
 import com.kavya.hackmate.user.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
+import com.kavya.hackmate.skill.Skill;
+import java.util.HashSet;
+import java.util.Set;
 
 import java.time.LocalDateTime;
 
@@ -59,4 +62,8 @@ public class User {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    @ManyToMany
+    @JoinTable(name = "user_skills", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "skill_id"))
+    private Set<Skill> skills = new HashSet<>();
 }
