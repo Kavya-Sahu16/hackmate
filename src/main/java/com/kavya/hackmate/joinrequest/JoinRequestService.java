@@ -1,6 +1,8 @@
 package com.kavya.hackmate.joinrequest;
 
 import com.kavya.hackmate.joinrequest.dto.JoinRequestResponse;
+import com.kavya.hackmate.notification.NotificationService;
+import com.kavya.hackmate.notification.enums.NotificationType;
 import com.kavya.hackmate.team.TeamRequest;
 import com.kavya.hackmate.team.TeamRequestRepository;
 import com.kavya.hackmate.user.UserRepository;
@@ -16,6 +18,7 @@ public class JoinRequestService {
     private final JoinRequestRepository joinRequestRepository;
     private final UserRepository userRepository;
     private final TeamRequestRepository teamRequestRepository;
+    private final NotificationService notificationService;
 
     public JoinRequestResponse applyToTeamRequest(
             Long teamRequestId,
@@ -34,6 +37,12 @@ public class JoinRequestService {
                 .build();
 
         JoinRequest saved = joinRequestRepository.save(joinRequest);
+        notificationService.createNotification(
+                teamRequest.getCreatedBy(),
+                applicant.getUsername() +
+                        " applied to your team: " +
+                        teamRequest.getTitle(),
+                NotificationType.NEW_JOIN_REQUEST);
 
         return JoinRequestResponse.builder()
                 .id(saved.getId())
