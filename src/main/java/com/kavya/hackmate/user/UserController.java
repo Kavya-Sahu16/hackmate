@@ -7,6 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import com.kavya.hackmate.skill.dto.AddSkillRequest;
 import com.kavya.hackmate.skill.dto.SkillResponse;
+import com.kavya.hackmate.user.dto.UserSearchRequest;
+import com.kavya.hackmate.user.dto.UserSearchResponse;
 
 import java.util.List;
 
@@ -62,5 +64,25 @@ public class UserController {
         String username = authentication.getName();
 
         userService.removeSkillFromUser(username, skillId);
+    }
+
+    @GetMapping("/search")
+    public List<UserSearchResponse> searchUsers(
+
+            @RequestParam(required = false) String skill,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String college,
+            @RequestParam(required = false) Integer graduationYear
+
+    ) {
+
+        UserSearchRequest request = new UserSearchRequest();
+
+        request.setSkill(skill);
+        request.setCity(city);
+        request.setCollege(college);
+        request.setGraduationYear(graduationYear);
+
+        return userService.searchUsers(request);
     }
 }

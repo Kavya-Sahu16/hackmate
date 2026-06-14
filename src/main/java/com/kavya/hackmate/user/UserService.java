@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 import com.kavya.hackmate.skill.Skill;
 import com.kavya.hackmate.skill.SkillRepository;
 import com.kavya.hackmate.skill.dto.SkillResponse;
+import com.kavya.hackmate.user.dto.UserSearchRequest;
+import com.kavya.hackmate.user.specification.UserSpecification;
+import com.kavya.hackmate.user.dto.UserSearchResponse;
+import java.util.stream.Collectors;
 
 import java.util.List;
 
@@ -110,6 +114,29 @@ public class UserService {
                                                 .id(skill.getId())
                                                 .name(skill.getName())
                                                 .category(skill.getCategory())
+                                                .build())
+                                .toList();
+        }
+
+        public List<UserSearchResponse> searchUsers(UserSearchRequest request) {
+
+                return userRepository.findAll(
+                                UserSpecification.searchUsers(request))
+                                .stream()
+                                .map(user -> UserSearchResponse.builder()
+                                                .id(user.getId())
+                                                .username(user.getUsername())
+                                                .name(user.getName())
+                                                .headline(user.getHeadline())
+                                                .college(user.getCollege())
+                                                .city(user.getCity())
+                                                .graduationYear(user.getGraduationYear())
+                                                .verified(user.getVerified())
+                                                .skills(
+                                                                user.getSkills()
+                                                                                .stream()
+                                                                                .map(skill -> skill.getName())
+                                                                                .collect(Collectors.toSet()))
                                                 .build())
                                 .toList();
         }
