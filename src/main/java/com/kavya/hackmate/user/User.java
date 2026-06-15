@@ -7,6 +7,7 @@ import lombok.*;
 import com.kavya.hackmate.skill.Skill;
 import java.util.HashSet;
 import java.util.Set;
+import com.kavya.hackmate.interest.Interest;
 
 import java.time.LocalDateTime;
 
@@ -66,4 +67,8 @@ public class User {
     @ManyToMany
     @JoinTable(name = "user_skills", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private Set<Skill> skills = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "user_interests", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "interest_id"))
+    private Set<Interest> interests = new HashSet<>();
 }
