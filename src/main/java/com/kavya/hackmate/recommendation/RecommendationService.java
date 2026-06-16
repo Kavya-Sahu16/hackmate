@@ -37,12 +37,14 @@ public class RecommendationService {
 
                     int score = 0;
                     if (currentUser.getCity() != null &&
+                            user.getCity() != null &&
                             currentUser.getCity().equalsIgnoreCase(user.getCity())) {
 
                         score += 10;
                     }
 
                     if (currentUser.getCollege() != null &&
+                            user.getCollege() != null &&
                             currentUser.getCollege().equalsIgnoreCase(user.getCollege())) {
 
                         score += 10;
@@ -71,6 +73,14 @@ public class RecommendationService {
                     }
                     score += matchingInterests * 15;
 
+                    score += calculateTextSimilarity(
+                            currentUser.getHeadline(),
+                            user.getHeadline());
+
+                    score += calculateTextSimilarity(
+                            currentUser.getBio(),
+                            user.getBio());
+
                     return RecommendationResponse.builder()
                             .userId(user.getId())
                             .username(user.getUsername())
@@ -91,5 +101,32 @@ public class RecommendationService {
                         .contains(skill.toLowerCase()))
                 .toList();
 
+    }
+
+    private int calculateTextSimilarity(
+            String text1,
+            String text2) {
+
+        if (text1 == null || text2 == null) {
+            return 0;
+        }
+
+        String[] words1 = text1.toLowerCase().split("\\s+");
+
+        String[] words2 = text2.toLowerCase().split("\\s+");
+
+        int matches = 0;
+
+        for (String word1 : words1) {
+
+            for (String word2 : words2) {
+
+                if (word1.equals(word2)) {
+                    matches++;
+                }
+            }
+        }
+
+        return matches * 5;
     }
 }
