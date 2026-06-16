@@ -14,6 +14,15 @@ public class RecommendationService {
 
     private final UserRepository userRepository;
 
+    private static final List<String> KNOWN_SKILLS = List.of(
+            "Java",
+            "Spring Boot",
+            "React",
+            "Machine Learning",
+            "Python",
+            "Docker",
+            "AWS");
+
     public List<RecommendationResponse> getRecommendations(
             String username) {
 
@@ -73,5 +82,14 @@ public class RecommendationService {
                         Comparator.comparing(
                                 RecommendationResponse::getMatchScore).reversed())
                 .toList();
+    }
+
+    public List<String> extractSkills(String text) {
+
+        return KNOWN_SKILLS.stream()
+                .filter(skill -> text.toLowerCase()
+                        .contains(skill.toLowerCase()))
+                .toList();
+
     }
 }
