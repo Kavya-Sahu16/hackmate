@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api/join-requests")
@@ -35,4 +36,26 @@ public class JoinRequestController {
 
         return joinRequestService.getRequestsForTeam(teamRequestId);
     }
+
+    @PostMapping("/{requestId}/accept")
+public JoinRequestResponse acceptRequest(
+        @PathVariable Long requestId,
+        Authentication authentication
+) {
+    return joinRequestService.acceptRequest(
+            requestId,
+            authentication.getName()
+    );
+}
+
+    @PostMapping("/{requestId}/reject")
+public JoinRequestResponse rejectRequest(
+        @PathVariable Long requestId,
+        Authentication authentication
+) {
+    return joinRequestService.rejectRequest(
+            requestId,
+            authentication.getName()
+    );
+}
 }

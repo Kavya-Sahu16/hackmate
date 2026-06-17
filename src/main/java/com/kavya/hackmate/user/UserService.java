@@ -39,6 +39,7 @@ public class UserService {
                                 .githubUrl(user.getGithubUrl())
                                 .linkedinUrl(user.getLinkedinUrl())
                                 .profilePictureUrl(user.getProfilePictureUrl())
+                                .verified(user.getVerified())
                                 .build();
         }
 

@@ -21,4 +21,5 @@ public class UserProfileResponse {
     private String githubUrl;
     private String linkedinUrl;
     private String profilePictureUrl;
+    private Boolean verified;
 }

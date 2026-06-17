@@ -86,6 +86,15 @@ public class RecommendationService {
                             .username(user.getUsername())
                             .name(user.getName())
                             .matchScore(score)
+                            .college(user.getCollege())
+                            .city(user.getCity())
+                            .graduationYear(user.getGraduationYear())
+                            .bio(user.getBio())
+                            .profilePictureUrl(user.getProfilePictureUrl())
+                            .githubUrl(user.getGithubUrl())
+                            .linkedinUrl(user.getLinkedinUrl())
+                            .verified(user.getVerified())
+                            .matchScore(score)
                             .build();
                 })
                 .sorted(

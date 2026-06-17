@@ -5,6 +5,7 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class RecommendationResponse {
 
@@ -15,4 +16,20 @@ public class RecommendationResponse {
     private String name;
 
     private Integer matchScore;
+
+    private String college;
+
+    private String city;
+
+    private Integer graduationYear;
+
+    private String bio;
+
+    private String profilePictureUrl;
+
+    private String githubUrl;
+
+    private String linkedinUrl;
+
+    private Boolean verified;
 }
