@@ -18,49 +18,52 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+        private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-                .cors(Customizer.withDefaults())
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .anyRequest().authenticated())
-                .addFilterBefore(
-                        jwtAuthenticationFilter,
-                        UsernamePasswordAuthenticationFilter.class);
+                http
+                                .cors(Customizer.withDefaults())
+                                .csrf(csrf -> csrf.disable())
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers("/api/auth/**").permitAll()
+                                                .anyRequest().authenticated()
 
-        return http.build();
-    }
+                                )
+                                .addFilterBefore(
+                                                jwtAuthenticationFilter,
+                                                UsernamePasswordAuthenticationFilter.class);
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+                return http.build();
+        }
 
-        CorsConfiguration configuration = new CorsConfiguration();
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
 
-        configuration.setAllowedOrigins(List.of(
-                "http://localhost:8080",
-                "https://hackmate-network.lovable.app"));
+                CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedMethods(List.of(
-                "GET",
-                "POST",
-                "PUT",
-                "DELETE",
-                "OPTIONS"));
+                configuration.setAllowedOrigins(List.of(
+                                "http://localhost:8080",
+                                "https://hackmate-network.lovable.app"));
 
-        configuration.setAllowedHeaders(List.of("*"));
+                configuration.setAllowedMethods(List.of(
+                                "GET",
+                                "POST",
+                                "PUT",
+                                "DELETE",
+                                "OPTIONS"));
 
-        configuration.setAllowCredentials(true);
+                configuration.setAllowedHeaders(List.of("*"));
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                configuration.setAllowCredentials(true);
 
-        source.registerCorsConfiguration("/**", configuration);
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-        return source;
-    }
+                source.registerCorsConfiguration("/**", configuration);
+
+                return source;
+        }
 }
