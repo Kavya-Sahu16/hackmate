@@ -6,6 +6,19 @@ HackMate helps students discover teammates, create teams, manage requests, recei
 
 ---
 
+## 🔗 Project Links
+
+🌐 Frontend Demo  
+https://hackmate-network.lovable.app/
+
+🎨 Frontend Repository  
+https://github.com/Kavya-Sahu16/hackmate-network
+
+⚙️ Backend API  
+https://hackmate-backend-lwdz.onrender.com
+
+---
+
 #  Features
 
 ### 🔐 Authentication & Security
@@ -51,10 +64,10 @@ HackMate helps students discover teammates, create teams, manage requests, recei
 - Discover Compatible Teammates
 
 ### 🎯 Recommendation System
-- Rule-Based Matching Engine
-- Skill Matching
-- Interest Matching
+- Skill-Based Matching
+- Interest-Based Matching
 - Compatibility Scoring
+- Teammate Recommendations
 
 ### 🔔 Notifications
 - Notification Generation
@@ -83,6 +96,18 @@ HackMate helps students discover teammates, create teams, manage requests, recei
 | Cloud Database | Aiven MySQL |
 | Deployment | Render |
 | AI Integration | Gemini API |
+
+---
+
+#  Project Architecture
+
+React Frontend
+      ↓
+Spring Boot Backend
+      ↓
+MySQL Database
+      ↓
+Gemini API
 
 ---
 
@@ -209,8 +234,8 @@ DELETE /api/team-requests/{id}
 ### Join Request APIs
 
 ```text
-POST   /api/join-requeststeam/{teamRequestId}
-GET    /api/join-requeststeam/{teamRequestId}
+POST   /api/join-requests/team/{teamRequestId}
+GET    /api/join-requests/team/{teamRequestId}
 ```
 
 ### Recommendation APIs
@@ -363,8 +388,6 @@ Tested modules:
 
 # 🚀 Future Enhancements
 
-- Real-Time Notifications with WebSockets
-- Real-Time Team Updates
 - In-App Chat System
 - Advanced AI Recommendation Engine
 - Hackathon Event Integration
